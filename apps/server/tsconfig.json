@@ -3,7 +3,16 @@
   "compilerOptions": {
     "lib": ["ES2022"],
     "outDir": "./dist",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "target": "es2022",
+    "rootDir": "src",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"],
+      "@user/*": ["modules/user/*"]
+    }
   },
   "exclude": ["node_modules"],
   "include": ["."]

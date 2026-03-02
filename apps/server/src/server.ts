@@ -1,8 +1,16 @@
-import express from "express";
+import { createApp } from "./app";
+import { envConfig } from "./config/env.config";
 
-const app = express();
-const port = process.env.PORT;
+async function bootstrap() {
+  const app = await createApp();
+  const port = envConfig.port;
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+  app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+  });
+}
+
+bootstrap().catch((err) => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
 });
