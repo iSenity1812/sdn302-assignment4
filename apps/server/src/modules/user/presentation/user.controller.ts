@@ -42,13 +42,11 @@ export class UserController {
       if (!user) {
         throw new UserNotFoundError(userId);
       }
-      return res
-        .status(200)
-        .json(
-          ok(user, {
-            message: `User with id "${user.name}" has been retrieved`,
-          }),
-        );
+      return res.status(200).json(
+        ok(user, {
+          message: `User with id '${user.name}' has been retrieved`,
+        }),
+      );
     } catch (err) {
       return next(err);
     }
@@ -66,7 +64,7 @@ export class UserController {
       const user = await this.registerUserUseCase.execute(dto);
       return res
         .status(201)
-        .json(ok(user, { message: `User "${user?.name}" has been created` }));
+        .json(ok(user, { message: `User '${user?.name}' has been created` }));
     } catch (err) {
       return next(err);
     }
@@ -93,7 +91,7 @@ export class UserController {
       return res
         .status(200)
         .json(
-          ok(user, { message: `User with id "${user.name}" has been updated` }),
+          ok(user, { message: `User with id '${user.name}' has been updated` }),
         );
     } catch (err) {
       return next(err);
@@ -114,7 +112,7 @@ export class UserController {
         .json(
           ok(
             { deleted: true, user },
-            { message: `User with "${user?.name}" has been deleted` },
+            { message: `User with '${user?.name}' has been deleted` },
           ),
         );
     } catch (err) {
