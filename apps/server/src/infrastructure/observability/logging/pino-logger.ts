@@ -12,7 +12,10 @@ export class PinoLogger implements ILogger {
       level: envConfig.logLevel,
       transport:
         envConfig.nodeEnv !== "production"
-          ? { target: "pino-pretty", options: { colorize: true } }
+          ? {
+              target: "pino-pretty",
+              options: { colorize: true, singleLine: false },
+            }
           : undefined,
     });
   }

@@ -1,17 +1,22 @@
 import { inject, injectable } from "inversify";
 import { USER_TYPES } from "../../user.token";
 import type { IUserRepository } from "../../domain/repositories/user-repository.interface";
+import type { ILogger } from "@/building-blocks/application/observability/logger.interface";
 import { RegisterUserInput } from "../dto/register-user-input.dto";
 import { User } from "../../domain/entities/user";
 import { UserAlreadyExistsError } from "@/shared/errors/domain.errors";
 import bcrypt from "bcrypt";
-import { randomUUID } from "crypto";
+import { validateOrReject } from "class-validator";
+import { LOGGER_TYPES } from "@/infrastructure/observability/logging/logging.type";
 
 @injectable()
 export class RegisterUserUseCase {
   constructor(
     @inject(USER_TYPES.Repository)
     private readonly userRepository: IUserRepository,
+
+    @inject(LOGGER_TYPES.AppLogger)
+    private readonly logger: ILogger,
   ) {}
 
   /**
@@ -34,22 +39,34 @@ export class RegisterUserUseCase {
    * @returns The newly created User entity, or null if the registration fails for some reason (though in this implementation it will throw an error instead of returning null).
    */
   async execute(input: RegisterUserInput): Promise<User | null> {
+    // validate password length
+    await validateOrReject(input);
+
+    // Check if a user with the same email already exists
     const existing = await this.userRepository.findByEmail(input.email);
 
     if (existing) {
+      this.logger.warn("RegisterUserUseCase: User with email already exists", {
+        email: input.email,
+      });
       throw new UserAlreadyExistsError(input.email);
     }
 
     const hashedPassword = await this.hashPassword(input.password);
+    // const objectId = new mongoose.Types.ObjectId();
+    const user = await this.userRepository.save(
+      User.create({
+        id: "",
+        name: input.name,
+        email: input.email,
+        password: hashedPassword,
+      }),
+    );
 
-    const user = User.create({
-      id: randomUUID(),
-      name: input.name,
-      email: input.email,
-      password: hashedPassword,
+    this.logger.info("RegisterUserUseCase: User registered successfully", {
+      userId: user.id,
+      email: user.email,
     });
-
-    await this.userRepository.save(user);
 
     return user;
   }

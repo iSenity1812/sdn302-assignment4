@@ -9,6 +9,7 @@ import { API_PREFIX } from "./config/api-prefix.config";
 import { healthRoutes } from "./modules/health/presentation/http/health.routes";
 import { UserController } from "./modules/user/presentation/user.controller";
 import { userRoutes } from "./modules/user/presentation/user.routes";
+import { USER_TYPES } from "./modules/user/user.token";
 
 export async function createApp(): Promise<Application> {
   const app = express();
@@ -16,7 +17,7 @@ export async function createApp(): Promise<Application> {
 
   // Get controllers
   const healthController = container.get(HealthController);
-  const userController = container.get(UserController);
+  const userController = container.get<UserController>(USER_TYPES.Controller);
 
   // Middleware
   app.use(express.json());

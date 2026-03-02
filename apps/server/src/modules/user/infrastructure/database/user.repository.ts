@@ -3,6 +3,7 @@ import { IUserRepository } from "../../domain/repositories/user-repository.inter
 import { User } from "../../domain/entities/user";
 import { UserModel } from "./mongo/user.model";
 import { UserMapper } from "./mappers/user.mapper";
+import mongoose from "mongoose";
 
 /**
  * This is the concrete implementation of the IUserRepository interface using MongoDB as the persistence layer.
@@ -25,7 +26,12 @@ export class UserRepository implements IUserRepository {
   async delete(userId: string): Promise<void> {
     await UserModel.deleteOne({ _id: userId });
   }
-  async save(user: User): Promise<void> {
-    await UserModel.create(UserMapper.toPersistence(user));
+  async save(user: User): Promise<User> {
+    const objectId = new mongoose.Types.ObjectId();
+    const doc = await UserModel.create({
+      _id: objectId,
+      ...UserMapper.toPersistence(user),
+    });
+    return UserMapper.toDomain(doc);
   }
 }

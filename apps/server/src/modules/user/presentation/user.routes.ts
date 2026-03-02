@@ -10,6 +10,14 @@ export function userRoutes(userController: UserController): Router {
     userController.registerUser.bind(userController),
   );
   router.get(`${USER_PREFIX}/:id`, userController.getUser.bind(userController));
+  router.put(
+    `${USER_PREFIX}/:id`,
+    userController.updateUser.bind(userController),
+  );
+  router.delete(
+    `${USER_PREFIX}/:id`,
+    userController.deleteUser.bind(userController),
+  );
 
   return router;
 }

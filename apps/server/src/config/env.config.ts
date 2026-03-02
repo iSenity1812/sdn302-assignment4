@@ -4,5 +4,5 @@ export const envConfig = {
   logLevel: process.env.LOG_LEVEL || "info",
   jwtSecret: process.env.JWT_SECRET,
   mongodbUri: process.env.MONGODB_URI || "mongodb://localhost:27017",
-  mongodbDbName: process.env.MONGODB_DB_NAME || "sdn302",
+  mongodbDbName: process.env.MONGODB_DB_NAME || "QuizApp",
 };

@@ -1,5 +1,4 @@
 import { registerDatabase } from "@/config/module/database.module";
-import { registerHealthModule } from "@/modules/health/health.module";
 import { Container } from "inversify";
 import { registerSystemModules } from "./module/system.module";
 import { registerInfrastructure } from "@/config/module/infrastructure.module";

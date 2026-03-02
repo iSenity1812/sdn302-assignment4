@@ -1,4 +1,3 @@
-import { ValidationError } from "@/shared/errors/domain.errors";
 import { AbstractUser } from "./user.abstract";
 
 export class User extends AbstractUser {

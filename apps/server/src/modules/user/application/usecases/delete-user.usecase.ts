@@ -2,6 +2,7 @@ import { inject, injectable } from "inversify";
 import type { IUserRepository } from "@user/domain/repositories/user-repository.interface";
 import { USER_TYPES } from "@user/user.token";
 import { UserNotFoundError } from "@/shared/errors/domain.errors";
+import { User } from "../../domain/entities/user";
 
 @injectable()
 export class DeleteUserUseCase {
@@ -15,7 +16,7 @@ export class DeleteUserUseCase {
    * @throws UserNotFoundError if the user with the given ID does not exist.
    * @returns void
    */
-  async execute(userId: string): Promise<void> {
+  async execute(userId: string): Promise<User | null> {
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new UserNotFoundError(userId);
@@ -23,5 +24,6 @@ export class DeleteUserUseCase {
     user.delete();
 
     await this.userRepository.update(user);
+    return user;
   }
 }

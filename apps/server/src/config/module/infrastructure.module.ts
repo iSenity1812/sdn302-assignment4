@@ -1,6 +1,7 @@
 import { Container } from "inversify";
 import { LOGGER_TYPES } from "../../infrastructure/observability/logging/logging.type";
 import { PinoLogger } from "../../infrastructure/observability/logging/pino-logger";
+import { ILogger } from "@/building-blocks/application/observability/logger.interface";
 
 export function registerInfrastructure(container: Container) {
   /**
@@ -10,5 +11,8 @@ export function registerInfrastructure(container: Container) {
    *
    */
   // Logging
-  container.bind(LOGGER_TYPES.AppLogger).to(PinoLogger).inSingletonScope();
+  container
+    .bind<ILogger>(LOGGER_TYPES.AppLogger)
+    .to(PinoLogger)
+    .inSingletonScope();
 }
