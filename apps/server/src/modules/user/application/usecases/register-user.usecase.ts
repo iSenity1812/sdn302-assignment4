@@ -53,13 +53,13 @@ export class RegisterUserUseCase {
     }
 
     const hashedPassword = await this.hashPassword(input.password);
-    // const objectId = new mongoose.Types.ObjectId();
     const user = await this.userRepository.save(
       User.create({
         id: "",
         name: input.name,
         email: input.email,
         password: hashedPassword,
+        role: input.role,
       }),
     );
 

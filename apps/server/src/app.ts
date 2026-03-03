@@ -10,22 +10,32 @@ import { healthRoutes } from "./modules/health/presentation/http/health.routes";
 import { UserController } from "./modules/user/presentation/user.controller";
 import { userRoutes } from "./modules/user/presentation/user.routes";
 import { USER_TYPES } from "./modules/user/user.token";
+import { AUTH_TYPES } from "./modules/auth/auth.token";
+import { AuthController } from "./modules/auth/presentation/auth.controller";
+import { authRoutes } from "./modules/auth/presentation/auth.routes";
+import passport from "passport";
+import { configurePassport } from "./modules/auth/infrastructure/security/passport.config";
 
 export async function createApp(): Promise<Application> {
   const app = express();
   const container = await buildContainer();
+  configurePassport(container);
 
   // Get controllers
   const healthController = container.get(HealthController);
   const userController = container.get<UserController>(USER_TYPES.Controller);
+  const authController = container.get<AuthController>(AUTH_TYPES.Controller);
 
   // Middleware
   app.use(express.json());
+  app.use(passport.initialize());
 
   // health check
   app.use(API_PREFIX, healthRoutes(healthController));
   // user routes
   app.use(API_PREFIX, userRoutes(userController));
+  // auth routes
+  app.use(API_PREFIX, authRoutes(authController));
 
   // error handling middleware
   app.use(notFoundMiddleware);

@@ -1,4 +1,5 @@
 import { registerUserModule } from "@/modules/user/user.module";
+import { registerAuthModule } from "@/modules/auth/auth.module";
 import { Container } from "inversify";
 
 export function registerBusinessModules(container: Container) {
@@ -9,4 +10,5 @@ export function registerBusinessModules(container: Container) {
    * registerUserModule(container);
    *  */
   registerUserModule(container);
+  registerAuthModule(container);
 }

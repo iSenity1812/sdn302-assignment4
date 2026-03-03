@@ -1,3 +1,4 @@
+import { Role } from "@/shared/types/role.enum";
 import { AbstractUser } from "./user.abstract";
 
 export class User extends AbstractUser {
@@ -6,6 +7,7 @@ export class User extends AbstractUser {
     public name: string,
     public email: string,
     public password: string,
+    public role: Role,
     public createdAt: Date,
     public updatedAt: Date,
     public isDeleted: boolean = false,
@@ -22,19 +24,26 @@ export class User extends AbstractUser {
     name: string;
     email: string;
     password: string;
+    role?: Role;
   }): User {
     return new User(
       props.id,
       props.name,
       props.email,
       props.password,
+      props.role ?? Role.USER,
       new Date(),
       new Date(),
     );
   }
 
   update(
-    fields: Partial<{ email: string; name: string; password: string }>,
+    fields: Partial<{
+      email: string;
+      name: string;
+      password: string;
+      role: Role;
+    }>,
   ): void {
     if (fields.name) {
       this.name = fields.name;
@@ -44,6 +53,9 @@ export class User extends AbstractUser {
     }
     if (fields.password) {
       this.password = fields.password;
+    }
+    if (fields.role) {
+      this.role = fields.role;
     }
     this.updatedAt = new Date();
   }

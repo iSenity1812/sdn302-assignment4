@@ -2,13 +2,15 @@ import { inject, injectable } from "inversify";
 import { USER_TYPES } from "../user.token";
 import { RegisterUserUseCase } from "../application/usecases/register-user.usecase";
 import { GetUserUseCase } from "../application/usecases/get-user.usecase";
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import { plainToInstance } from "class-transformer";
 import {
   InvalidIdentifierError,
   UserNotFoundError,
 } from "@/shared/errors/domain.errors";
 import { ok } from "@/shared/http/builder/response.factory";
+import { Role } from "@/shared/security/role.decorator";
+import { Role as UserRole } from "@/shared/types/role.enum";
 import { RegisterUserInput } from "../application/dto/register-user-input.dto";
 import { UpdateUserInput } from "../application/dto/update-user-input.dto";
 import { UpdateUserUseCase } from "../application/usecases/update-user.usecase";
@@ -30,6 +32,7 @@ export class UserController {
     private readonly deleteUserUseCase: DeleteUserUseCase,
   ) {}
 
+  @Role(UserRole.ADMIN)
   async getUser(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.params.id;
@@ -54,11 +57,12 @@ export class UserController {
 
   async registerUser(req: Request, res: Response, next: NextFunction) {
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password, role } = req.body;
       const dto = plainToInstance(RegisterUserInput, {
         name,
         email,
         password,
+        role,
       });
 
       const user = await this.registerUserUseCase.execute(dto);
@@ -70,6 +74,7 @@ export class UserController {
     }
   }
 
+  @Role(UserRole.USER, UserRole.ADMIN)
   async updateUser(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.params.id;
@@ -78,11 +83,12 @@ export class UserController {
           location: "params",
         });
       }
-      const { name, email, password } = req.body;
+      const { name, email, password, role } = req.body;
       const dto = plainToInstance(UpdateUserInput, {
         name,
         email,
         password,
+        role,
       });
       const user = await this.updateUserUseCase.execute(userId, dto);
       if (!user) {
@@ -98,6 +104,7 @@ export class UserController {
     }
   }
 
+  @Role(UserRole.USER, UserRole.ADMIN)
   async deleteUser(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.params.id;

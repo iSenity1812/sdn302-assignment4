@@ -1,7 +1,8 @@
-export class JWT {
+export class AuthTokenDto {
   constructor(
     public accessToken: string,
     public refreshToken: string,
-    public expiresIn: number,
+    public tokenType: string,
+    public expiresIn: string,
   ) {}
 }
