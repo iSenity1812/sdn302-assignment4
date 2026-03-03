@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { AppError } from "../../building-blocks/result/Error";
+import { AppError } from "../../building-blocks/result/error";
 import { ErrorCodes } from "../errors/error-code";
 import { fail } from "../http/builder/response.factory";
 
