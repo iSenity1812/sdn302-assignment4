@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import { IAuthRepository } from "@/modules/auth/domain/repositories/auth-repository.interface";
 import { AuthUser } from "@/modules/auth/domain/model/auth-user.interface";
-import { UserModel } from "@/modules/user/infrastructure/database/mongo/user.model";
+import { UserModel } from "@/modules/user/infrastructure/database/model/user.model";
 
 @injectable()
 export class AuthRepository implements IAuthRepository {

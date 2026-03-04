@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import { IUserRepository } from "../../domain/repositories/user-repository.interface";
 import { User } from "../../domain/entities/user";
-import { UserModel } from "./mongo/user.model";
+import { UserModel } from "./model/user.model";
 import { UserMapper } from "./mappers/user.mapper";
 import mongoose from "mongoose";
 

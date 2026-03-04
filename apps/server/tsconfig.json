@@ -11,7 +11,8 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"],
-      "@user/*": ["modules/user/*"]
+      "@user/*": ["modules/user/*"],
+      "@question/*": ["modules/question/*"]
     }
   },
   "exclude": ["node_modules"],
