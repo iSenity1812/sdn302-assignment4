@@ -5,17 +5,14 @@ import { ResponseQuestion } from "../dto/response-question.dto";
 import { QuestionOutputMapper } from "../mappers/question-output.mapper";
 
 @injectable()
-export class GetQuestionUseCase {
+export class GetAllQuestionUseCase {
   constructor(
     @inject(QUESTION_TYPES.Repository)
     private readonly questionRepository: IQuestionRepository,
   ) {}
 
-  async execute(id: string): Promise<ResponseQuestion | null> {
-    const question = await this.questionRepository.findById(id);
-    if (!question) {
-      return null;
-    }
-    return QuestionOutputMapper.toResponse(question);
+  async execute(): Promise<ResponseQuestion[]> {
+    const questions = await this.questionRepository.findAll();
+    return questions.map(QuestionOutputMapper.toResponse);
   }
 }

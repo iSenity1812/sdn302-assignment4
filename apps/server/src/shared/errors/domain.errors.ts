@@ -18,6 +18,16 @@ export class DomainError extends AppError {
   }
 }
 
+export class PaginationQueryError extends DomainError {
+  constructor(
+    message = "Invalid pagination query",
+    details?: unknown,
+    statusCode?: number,
+  ) {
+    super(ErrorCodes.VALIDATION_ERROR, message, statusCode ?? 400, details);
+  }
+}
+
 export class UnauthorizedError extends DomainError {
   constructor(message = "Unauthorized", details?: unknown) {
     super(ErrorCodes.UNAUTHORIZED, message, 401, details);

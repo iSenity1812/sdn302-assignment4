@@ -31,7 +31,7 @@ export class QuestionPersistenceMapper {
       correctAnswer: question.correctAnswer,
       difficulty: question.difficulty,
       tags: question.tags,
-      explanation: question["props"].explanation,
+      explanation: question.explanation,
       status: question.status,
     }
   }

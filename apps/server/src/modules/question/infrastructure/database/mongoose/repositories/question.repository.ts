@@ -1,11 +1,16 @@
 import { Question } from "@/modules/question/domain/entities/question";
 import { IQuestionRepository } from "@/modules/question/domain/repositories/question-repository.interface";
-import { QuestionSearchParams } from "@/modules/question/domain/repositories/question-search-params.interface";
-import { RandomQuestionParams } from "@/modules/question/domain/repositories/random-question-params.interface";
+import { RandomQuestionParams } from "@/modules/question/application/queries/random-question.query";
 import { QuestionModel } from "../persistence/question.model";
 import { QuestionPersistenceMapper } from "../mappers/question.persistence.mapper";
+import { injectable } from "inversify";
 
+@injectable()
 export class QuestionRepository implements IQuestionRepository {
+  async findAll(): Promise<Question[]> {
+    const docs = await QuestionModel.find().lean().exec();
+    return docs.map((doc) => QuestionPersistenceMapper.toDomain(doc));
+  }
   async save(question: Question): Promise<Question> {
     const data = QuestionPersistenceMapper.toPersistence(question);
     const doc = await QuestionModel.create(data);
@@ -35,25 +40,6 @@ export class QuestionRepository implements IQuestionRepository {
   async delete(questionId: string): Promise<void> {
     await QuestionModel.deleteOne({ _id: questionId });
     return Promise.resolve();
-  }
-  async search(params: QuestionSearchParams): Promise<Question[]> {
-    const query: any = {};
-
-    if (params.difficulty) {
-      query.difficulty = params.difficulty;
-    }
-    if (params.tags) {
-      query.tags = { $all: params.tags };
-    }
-    if (params.status) {
-      query.status = params.status;
-    }
-    if (params.authorId) {
-      query.authorId = params.authorId;
-    }
-
-    const docs = await QuestionModel.find(query);
-    return docs.map((doc) => QuestionPersistenceMapper.toDomain(doc));
   }
   async getShuffleQuestions(params: RandomQuestionParams): Promise<Question[]> {
     const match: any = { status: "ACTIVE" };
