@@ -5,9 +5,9 @@ import { envConfig } from "./config/env.config";
 async function bootstrap() {
   const app = await createApp();
   const port = envConfig.port;
-
-  app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+  const host = envConfig.host;
+  app.listen(port, host, () => {
+    console.log(`Server is running at http://${host}:${port}`);
   });
 }
 

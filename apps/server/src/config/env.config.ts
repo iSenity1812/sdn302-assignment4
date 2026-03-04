@@ -1,5 +1,7 @@
+import "dotenv/config";
 export const envConfig = {
   port: Number(process.env.PORT) || 3000,
+  host: process.env.HOST || "0.0.0.0",
   nodeEnv: process.env.NODE_ENV || "development",
   logLevel: process.env.LOG_LEVEL || "info",
   jwtSecret: process.env.JWT_SECRET || "access-secret",
