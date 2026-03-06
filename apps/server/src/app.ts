@@ -18,6 +18,9 @@ import { configurePassport } from "./modules/auth/infrastructure/security/passpo
 import { QuestionController } from "./modules/question/presentation/question.controller";
 import { QUESTION_TYPES } from "./modules/question/di/question.token";
 import { questionRoutes } from "./modules/question/presentation/question.route";
+import { QUIZ_TYPES } from "./modules/quiz/di/quiz.token";
+import { QuizController } from "./modules/quiz/presentation/quiz.controller";
+import { quizRoutes } from "./modules/quiz/presentation/quiz.route";
 
 export async function createApp(): Promise<Application> {
   const app = express();
@@ -31,6 +34,7 @@ export async function createApp(): Promise<Application> {
   const questionController = container.get<QuestionController>(
     QUESTION_TYPES.Controller,
   );
+  const quizController = container.get<QuizController>(QUIZ_TYPES.Controller);
 
   // Middleware
   app.use(express.json());
@@ -44,6 +48,8 @@ export async function createApp(): Promise<Application> {
   app.use(API_PREFIX, authRoutes(authController));
   // question routes
   app.use(API_PREFIX, questionRoutes(questionController));
+  // quiz routes
+  app.use(API_PREFIX, quizRoutes(quizController));
 
   // error handling middleware
   app.use(notFoundMiddleware);

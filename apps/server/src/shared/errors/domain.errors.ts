@@ -1,4 +1,4 @@
-import { AppError } from "@/building-blocks/result/Error";
+import { AppError } from "@/building-blocks/result/error";
 import { ErrorCode, ErrorCodes } from "./error-code";
 
 /**
