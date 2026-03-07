@@ -12,7 +12,8 @@
     "paths": {
       "@/*": ["*"],
       "@user/*": ["modules/user/*"],
-      "@question/*": ["modules/question/*"]
+      "@question/*": ["modules/question/*"],
+      "@quiz/*": ["modules/quiz/*"]
     }
   },
   "exclude": ["node_modules", "dist"],

@@ -12,7 +12,7 @@ export async function seedQuestions(adminIds: string[], logger?: PinoLogger) {
 
   const [primaryAdminId, secondaryAdminId = primaryAdminId] = adminIds;
   const adminPool = [primaryAdminId, secondaryAdminId];
-  const pickAdmin = () => faker.helpers.arrayElement(adminPool);
+  const pickAdmin = () => faker.helpers.arrayElement(adminPool)!;
   const enhanceExplanation = (base: string) =>
     `${base} Example context: ${faker.helpers.arrayElement([
       "quiz authoring workflow",

@@ -72,24 +72,21 @@ export async function seedQuizzes(
   const quizzes = [
     {
       title: titleVariant("Backend Engineering Fundamentals"),
-      description:
-        `Covers clean architecture, dependency injection, and HTTP API design basics. ${descriptionSuffix}`,
+      description: `Covers clean architecture, dependency injection, and HTTP API design basics. ${descriptionSuffix}`,
       createdBy,
       status: QuizStatus.PUBLISHED,
       questions: backendFundamentals,
     },
     {
       title: titleVariant("API Security Essentials"),
-      description:
-        `Focuses on authentication, JWT usage, and secure credential handling. ${descriptionSuffix}`,
+      description: `Focuses on authentication, JWT usage, and secure credential handling. ${descriptionSuffix}`,
       createdBy,
       status: QuizStatus.PUBLISHED,
       questions: securityQuiz,
     },
     {
       title: titleVariant("Advanced System Design Drill"),
-      description:
-        `Challenging set on consistency models, CQRS trade-offs, and event reliability. ${descriptionSuffix}`,
+      description: `Challenging set on consistency models, CQRS trade-offs, and event reliability. ${descriptionSuffix}`,
       createdBy,
       status: QuizStatus.DRAFT,
       questions: advancedEngineering,

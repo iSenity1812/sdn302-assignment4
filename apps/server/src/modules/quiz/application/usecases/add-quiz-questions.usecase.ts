@@ -60,12 +60,13 @@ export class AddQuizQuestionsUseCase {
     if (existingQuestionIds.length > 0) {
       const uniqueQuestionIds = [...new Set(existingQuestionIds)];
 
-      const existingQuestions = await this.questionRepository.findByIds(
-        uniqueQuestionIds,
-      );
+      const existingQuestions =
+        await this.questionRepository.findByIds(uniqueQuestionIds);
 
       if (existingQuestions.length !== uniqueQuestionIds.length) {
-        const foundIds = new Set(existingQuestions.map((question) => question.id));
+        const foundIds = new Set(
+          existingQuestions.map((question) => question.id),
+        );
         const missingQuestionIds = uniqueQuestionIds.filter(
           (questionId) => !foundIds.has(questionId),
         );
@@ -104,7 +105,8 @@ export class AddQuizQuestionsUseCase {
           explanation: questionInput.explanation,
         });
 
-        const savedQuestion = await this.questionRepository.save(domainQuestion);
+        const savedQuestion =
+          await this.questionRepository.save(domainQuestion);
         createdQuestions.push(savedQuestion);
       }
 
@@ -116,8 +118,8 @@ export class AddQuizQuestionsUseCase {
         new QuizQuestion({
           id: question.id,
           content: question.content,
-          options: question.options.map((option) =>
-            new QuizOption({ value: option.value }),
+          options: question.options.map(
+            (option) => new QuizOption({ value: option.value }),
           ),
           correctAnswer: question.correctAnswer,
           difficulty: question.difficulty,
