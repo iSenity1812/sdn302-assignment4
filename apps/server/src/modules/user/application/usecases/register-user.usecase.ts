@@ -8,6 +8,7 @@ import { UserAlreadyExistsError } from "@/shared/errors/domain.errors";
 import bcrypt from "bcrypt";
 import { validateOrReject } from "class-validator";
 import { LOGGER_TYPES } from "@/infrastructure/observability/logging/logging.type";
+import { Role } from "@/shared/types/role.enum";
 
 @injectable()
 export class RegisterUserUseCase {
@@ -59,7 +60,7 @@ export class RegisterUserUseCase {
         name: input.name,
         email: input.email,
         password: hashedPassword,
-        role: input.role,
+        role: input.isAdmin ? Role.ADMIN : Role.USER,
       }),
     );
 

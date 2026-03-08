@@ -6,6 +6,7 @@ import { SearchQuestionUseCase } from "../application/usecases/search-question.u
 import { ShuffleQuestionUseCase } from "../application/usecases/shuffle-question.usecase";
 import { UpdateQuestionUseCase } from "../application/usecases/update-question.usecase";
 import { ArchiveQuestionUseCase } from "../application/usecases/archive-question.usecase";
+import { RemoveQuestionUseCase } from "../application/usecases/remove-question.usecase";
 import { Role as UserRole } from "@/shared/types/role.enum";
 import { Role } from "@/shared/security/role.decorator";
 import type { Request, Response, NextFunction } from "express";
@@ -53,6 +54,9 @@ export class QuestionController {
 
     @inject(QUESTION_TYPES.UseCase.UpdateQuestion)
     private readonly updateQuestionUseCase: UpdateQuestionUseCase,
+
+    @inject(QUESTION_TYPES.UseCase.RemoveQuestion)
+    private readonly removeQuestionUseCase: RemoveQuestionUseCase,
 
     @inject(QUESTION_TYPES.UseCase.ArchiveQuestion)
     private readonly archiveQuestionUseCase: ArchiveQuestionUseCase,
@@ -147,6 +151,11 @@ export class QuestionController {
         return Number.isFinite(parsed) ? parsed : undefined;
       };
 
+      const getTagsRawValue = (): unknown => {
+        const query = req.query as Record<string, unknown>;
+        return query.tags ?? query["tags[]"];
+      };
+
       const parseTags = (value: unknown): string[] | undefined => {
         if (Array.isArray(value)) {
           return value.filter((tag): tag is string => typeof tag === "string");
@@ -177,7 +186,7 @@ export class QuestionController {
           typeof req.query.authorId === "string"
             ? req.query.authorId
             : undefined,
-        tags: parseTags(req.query.tags),
+        tags: parseTags(getTagsRawValue()),
       });
 
       return res.status(200).json(
@@ -200,6 +209,11 @@ export class QuestionController {
         if (typeof value !== "string") return undefined;
         const parsed = Number(value);
         return Number.isFinite(parsed) ? parsed : undefined;
+      };
+
+      const getTagsRawValue = (): unknown => {
+        const query = req.query as Record<string, unknown>;
+        return query.tags ?? query["tags[]"];
       };
 
       const parseTags = (value: unknown): string[] | undefined => {
@@ -234,7 +248,7 @@ export class QuestionController {
           typeof req.query.difficulty === "string"
             ? (req.query.difficulty as Difficulty)
             : undefined,
-        tags: parseTags(req.query.tags),
+        tags: parseTags(getTagsRawValue()),
       });
 
       return res.status(200).json(
@@ -280,6 +294,32 @@ export class QuestionController {
       return res
         .status(200)
         .json(ok(question, { message: "Question updated successfully" }));
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  @Role(UserRole.ADMIN)
+  async removeQuestion(req: Request, res: Response, next: NextFunction) {
+    try {
+      const questionId = req.params.id;
+      if (typeof questionId !== "string") {
+        throw new QuestionValidationError("Invalid question ID", {
+          location: "params",
+          field: "id",
+          value: questionId,
+        });
+      }
+
+      await this.removeQuestionUseCase.execute(questionId);
+      return res
+        .status(200)
+        .json(
+          ok(
+            { removed: true, id: questionId },
+            { message: "Question removed successfully" },
+          ),
+        );
     } catch (error) {
       return next(error);
     }

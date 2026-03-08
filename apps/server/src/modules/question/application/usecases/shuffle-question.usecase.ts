@@ -18,7 +18,8 @@ export class ShuffleQuestionUseCase {
   ) {}
 
   async execute(params: RandomQuestionParams): Promise<Page<ResponseQuestion>> {
-    const pagination = new PaginationQuery(params.page, params.limit);
+    // Shuffle endpoint should always return exactly `count` items (or fewer if unavailable).
+    const pagination = new PaginationQuery(params.page, params.count);
 
     const queryParams: RandomQuestionQuery = {
       ...params,

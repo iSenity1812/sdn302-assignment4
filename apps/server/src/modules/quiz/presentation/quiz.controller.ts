@@ -9,6 +9,7 @@ import { AddQuizQuestionsUseCase } from "../application/usecases/add-quiz-questi
 import { RemoveQuizQuestionUseCase } from "../application/usecases/remove-quiz-question.usecase";
 import { PublishQuizUseCase } from "../application/usecases/publish-quiz.usecase";
 import { ArchiveQuizUseCase } from "../application/usecases/archive-quiz.usecase";
+import { RemoveQuizUseCase } from "../application/usecases/remove-quiz.usecase";
 import type { NextFunction, Request, Response } from "express";
 import { Role } from "@/shared/security/role.decorator";
 import { Role as UserRole } from "@/shared/types/role.enum";
@@ -35,6 +36,9 @@ export class QuizController {
 
     @inject(QUIZ_TYPES.UseCase.UpdateQuiz)
     private readonly updateQuizUseCase: UpdateQuizUseCase,
+
+    @inject(QUIZ_TYPES.UseCase.RemoveQuiz)
+    private readonly removeQuizUseCase: RemoveQuizUseCase,
 
     @inject(QUIZ_TYPES.UseCase.AddQuizQuestions)
     private readonly addQuizQuestionsUseCase: AddQuizQuestionsUseCase,
@@ -171,6 +175,32 @@ export class QuizController {
       return res
         .status(200)
         .json(ok(quiz, { message: "Quiz updated successfully" }));
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  @Role(UserRole.ADMIN)
+  async removeQuiz(req: Request, res: Response, next: NextFunction) {
+    try {
+      const quizId = req.params.id;
+      if (typeof quizId !== "string") {
+        throw new QuizValidationError("Invalid quiz ID", {
+          location: "params",
+          field: "id",
+          value: quizId,
+        });
+      }
+
+      await this.removeQuizUseCase.execute(quizId);
+      return res
+        .status(200)
+        .json(
+          ok(
+            { removed: true, id: quizId },
+            { message: "Quiz removed successfully" },
+          ),
+        );
     } catch (error) {
       return next(error);
     }

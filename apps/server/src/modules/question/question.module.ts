@@ -12,34 +12,42 @@ import { ShuffleQuestionUseCase } from "./application/usecases/shuffle-question.
 import { UpdateQuestionUseCase } from "./application/usecases/update-question.usecase";
 import { ArchiveQuestionUseCase } from "./application/usecases/archive-question.usecase";
 import { GetAllQuestionUseCase } from "./application/usecases/get-all-question.usecase";
+import { RemoveQuestionUseCase } from "./application/usecases/remove-question.usecase";
 
 export function registerQuestionModule(container: Container) {
-	container.bind<IQuestionRepository>(QUESTION_TYPES.Repository).to(QuestionRepository);
-	container
-		.bind<IQuestionQueryRepository>(QUESTION_TYPES.QueryRepository)
-		.to(questionQueryRepository);
+  container
+    .bind<IQuestionRepository>(QUESTION_TYPES.Repository)
+    .to(QuestionRepository);
+  container
+    .bind<IQuestionQueryRepository>(QUESTION_TYPES.QueryRepository)
+    .to(questionQueryRepository);
 
-	container.bind<QuestionController>(QUESTION_TYPES.Controller).to(QuestionController);
+  container
+    .bind<QuestionController>(QUESTION_TYPES.Controller)
+    .to(QuestionController);
 
-	container
-		.bind<CreateQuestionUseCase>(QUESTION_TYPES.UseCase.CreateQuestion)
-		.to(CreateQuestionUseCase);
-	container
-		.bind<GetQuestionUseCase>(QUESTION_TYPES.UseCase.GetQuestion)
-		.to(GetQuestionUseCase);
+  container
+    .bind<CreateQuestionUseCase>(QUESTION_TYPES.UseCase.CreateQuestion)
+    .to(CreateQuestionUseCase);
+  container
+    .bind<GetQuestionUseCase>(QUESTION_TYPES.UseCase.GetQuestion)
+    .to(GetQuestionUseCase);
   container
     .bind<GetAllQuestionUseCase>(QUESTION_TYPES.UseCase.GetAllQuestion)
     .to(GetAllQuestionUseCase);
-	container
-		.bind<SearchQuestionUseCase>(QUESTION_TYPES.UseCase.SearchQuestion)
-		.to(SearchQuestionUseCase);
-	container
-		.bind<ShuffleQuestionUseCase>(QUESTION_TYPES.UseCase.ShuffleQuestion)
-		.to(ShuffleQuestionUseCase);
-	container
-		.bind<UpdateQuestionUseCase>(QUESTION_TYPES.UseCase.UpdateQuestion)
-		.to(UpdateQuestionUseCase);
-	container
-		.bind<ArchiveQuestionUseCase>(QUESTION_TYPES.UseCase.ArchiveQuestion)
-		.to(ArchiveQuestionUseCase);
+  container
+    .bind<SearchQuestionUseCase>(QUESTION_TYPES.UseCase.SearchQuestion)
+    .to(SearchQuestionUseCase);
+  container
+    .bind<ShuffleQuestionUseCase>(QUESTION_TYPES.UseCase.ShuffleQuestion)
+    .to(ShuffleQuestionUseCase);
+  container
+    .bind<UpdateQuestionUseCase>(QUESTION_TYPES.UseCase.UpdateQuestion)
+    .to(UpdateQuestionUseCase);
+  container
+    .bind<RemoveQuestionUseCase>(QUESTION_TYPES.UseCase.RemoveQuestion)
+    .to(RemoveQuestionUseCase);
+  container
+    .bind<ArchiveQuestionUseCase>(QUESTION_TYPES.UseCase.ArchiveQuestion)
+    .to(ArchiveQuestionUseCase);
 }

@@ -9,4 +9,5 @@ export const quizEndpoints = {
   addQuestions: (id: string) => `/quizzes/${id}/questions`,
   removeQuestion: (quizId: string, questionId: string) =>
     `/quizzes/${quizId}/questions/${questionId}`,
+  remove: (id: string) => `/quizzes/${id}`,
 };

@@ -9,6 +9,7 @@ export const QUIZ_TYPES = {
     GetAllQuiz: Symbol.for("Quiz.UseCase.GetAllQuiz"),
     SearchQuiz: Symbol.for("Quiz.UseCase.SearchQuiz"),
     UpdateQuiz: Symbol.for("Quiz.UseCase.UpdateQuiz"),
+    RemoveQuiz: Symbol.for("Quiz.UseCase.RemoveQuiz"),
     AddQuizQuestions: Symbol.for("Quiz.UseCase.AddQuizQuestions"),
     RemoveQuizQuestion: Symbol.for("Quiz.UseCase.RemoveQuizQuestion"),
     PublishQuiz: Symbol.for("Quiz.UseCase.PublishQuiz"),

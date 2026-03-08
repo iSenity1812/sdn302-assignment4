@@ -57,12 +57,12 @@ export class UserController {
 
   async registerUser(req: Request, res: Response, next: NextFunction) {
     try {
-      const { name, email, password, role } = req.body;
+      const { name, email, password, isAdmin } = req.body;
       const dto = plainToInstance(RegisterUserInput, {
         name,
         email,
         password,
-        role,
+        isAdmin,
       });
 
       const user = await this.registerUserUseCase.execute(dto);

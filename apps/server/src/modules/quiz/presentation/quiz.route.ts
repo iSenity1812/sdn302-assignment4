@@ -57,6 +57,13 @@ export function quizRoutes(quizController: QuizController): Router {
     quizController.updateQuiz.bind(quizController),
   );
 
+  router.delete(
+    `${QUIZ_PREFIX}/:id`,
+    jwtAuth,
+    roleGuard(quizController, "removeQuiz"),
+    quizController.removeQuiz.bind(quizController),
+  );
+
   router.post(
     `${QUIZ_PREFIX}/:id/questions`,
     jwtAuth,

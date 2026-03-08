@@ -55,6 +55,13 @@ export const updateQuestion = (id: string, data: QuestionUpdateDto) => {
   });
 };
 
+export const removeQuestion = (id: string) => {
+  return request<ApiResponse<void>>({
+    url: questionEndpoints.remove(id),
+    method: "DELETE",
+  });
+};
+
 export const archiveQuestion = (id: string) => {
   return request<ApiResponse<QuestionArchiveResultDto>>({
     url: questionEndpoints.archive(id),

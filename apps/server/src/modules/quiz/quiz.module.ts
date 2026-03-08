@@ -14,6 +14,7 @@ import { AddQuizQuestionsUseCase } from "./application/usecases/add-quiz-questio
 import { RemoveQuizQuestionUseCase } from "./application/usecases/remove-quiz-question.usecase";
 import { PublishQuizUseCase } from "./application/usecases/publish-quiz.usecase";
 import { ArchiveQuizUseCase } from "./application/usecases/archive-quiz.usecase";
+import { RemoveQuizUseCase } from "./application/usecases/remove-quiz.usecase";
 
 export function registerQuizModule(container: Container) {
   container.bind<IQuizRepository>(QUIZ_TYPES.Repository).to(QuizRepository);
@@ -36,6 +37,9 @@ export function registerQuizModule(container: Container) {
   container
     .bind<UpdateQuizUseCase>(QUIZ_TYPES.UseCase.UpdateQuiz)
     .to(UpdateQuizUseCase);
+  container
+    .bind<RemoveQuizUseCase>(QUIZ_TYPES.UseCase.RemoveQuiz)
+    .to(RemoveQuizUseCase);
   container
     .bind<AddQuizQuestionsUseCase>(QUIZ_TYPES.UseCase.AddQuizQuestions)
     .to(AddQuizQuestionsUseCase);

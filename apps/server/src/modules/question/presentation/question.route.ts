@@ -41,7 +41,7 @@ export function questionRoutes(questionController: QuestionController): Router {
     jwtAuth,
     roleGuard(questionController, "getAllQuestions"),
     questionController.getAllQuestions.bind(questionController),
-  )
+  );
 
   router.get(
     `${QUESTION_PREFIX}/shuffle`,
@@ -64,6 +64,13 @@ export function questionRoutes(questionController: QuestionController): Router {
     questionController.updateQuestion.bind(questionController),
   );
 
+  router.delete(
+    `${QUESTION_PREFIX}/:id`,
+    jwtAuth,
+    roleGuard(questionController, "removeQuestion"),
+    questionController.removeQuestion.bind(questionController),
+  );
+
   router.patch(
     `${QUESTION_PREFIX}/:id/archive`,
     jwtAuth,
@@ -72,5 +79,4 @@ export function questionRoutes(questionController: QuestionController): Router {
   );
 
   return router;
-
 }

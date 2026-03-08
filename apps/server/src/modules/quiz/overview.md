@@ -9,6 +9,7 @@ The `quiz` module manages quiz lifecycle and question composition workflows:
 - Get all quizzes
 - Search quizzes with filters + pagination
 - Update quiz metadata
+- Remove quiz
 - Add questions into a quiz (existing question IDs and/or inline question payloads)
 - Remove a question from quiz
 - Publish quiz
@@ -66,6 +67,7 @@ Effective endpoints:
 - `GET /api/v1/quizzes/all` (USER, ADMIN) -> get all quizzes
 - `GET /api/v1/quizzes/:id` (USER, ADMIN) -> get quiz by id
 - `PUT /api/v1/quizzes/:id` (ADMIN) -> update quiz metadata
+- `DELETE /api/v1/quizzes/:id` (ADMIN) -> remove quiz
 - `POST /api/v1/quizzes/:id/questions` (ADMIN) -> add questions into quiz
 - `DELETE /api/v1/quizzes/:id/questions/:questionId` (ADMIN) -> remove question from quiz
 - `PATCH /api/v1/quizzes/:id/publish` (ADMIN) -> publish quiz
@@ -95,6 +97,7 @@ Registered in `quiz.module.ts`:
   - `GetAllQuizUseCase`
   - `SearchQuizUseCase`
   - `UpdateQuizUseCase`
+  - `RemoveQuizUseCase`
   - `AddQuizQuestionsUseCase`
   - `RemoveQuizQuestionUseCase`
   - `PublishQuizUseCase`
@@ -158,6 +161,11 @@ Note: current use case returns `null` when not found (does not throw `QuizNotFou
    - default tags to `['quiz']` when omitted
 5. Convert collected questions to quiz snapshots (`QuizQuestion` + `QuizOption`)
 6. Add into quiz aggregate (`quiz.addQuestions`), persist, publish events, clear events
+
+### Remove quiz
+
+1. Validate `id` and ensure quiz exists
+2. Delete quiz by id via repository
 
 ### Remove question from quiz
 

@@ -1,7 +1,6 @@
-import { Role } from "@/shared/types/role.enum";
 import {
+  IsBoolean,
   IsEmail,
-  IsEnum,
   IsNotEmpty,
   IsOptional,
   MinLength,
@@ -19,13 +18,13 @@ export class RegisterUserInput {
   password: string;
 
   @IsOptional()
-  @IsEnum(Role)
-  role?: Role;
+  @IsBoolean()
+  isAdmin?: boolean;
 
-  constructor(email: string, name: string, password: string, role?: Role) {
+  constructor(email: string, name: string, password: string, isAdmin?: boolean) {
     this.email = email;
     this.name = name;
     this.password = password;
-    this.role = role;
+    this.isAdmin = isAdmin;
   }
 }

@@ -12,4 +12,5 @@ export const envConfig = {
   jwtResetExpiresIn: process.env.JWT_RESET_EXPIRES_IN || "15m",
   mongodbUri: process.env.MONGODB_URI || "mongodb://localhost:27017",
   mongodbDbName: process.env.MONGODB_DB_NAME || "QuizApp",
+  corsOrigin: process.env.CORS_ORIGIN || "http://localhost:3000",
 };

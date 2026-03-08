@@ -72,3 +72,10 @@ export const archiveQuiz = (id: string) => {
     method: "PATCH",
   });
 };
+
+export const removeQuiz = (id: string) => {
+  return request<ApiResponse<void>>({
+    url: quizEndpoints.remove(id),
+    method: "DELETE",
+  });
+};

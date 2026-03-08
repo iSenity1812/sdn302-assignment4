@@ -4,6 +4,7 @@ export const questionEndpoints = {
   getAll: "/questions/all",
   getById: (id: string) => `/questions/${id}`,
   update: (id: string) => `/questions/${id}`,
+  remove: (id: string) => `/questions/${id}`,
   archive: (id: string) => `/questions/${id}/archive`,
   shuffle: "/questions/shuffle",
 };

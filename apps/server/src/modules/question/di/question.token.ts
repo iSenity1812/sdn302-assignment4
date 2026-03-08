@@ -10,6 +10,7 @@ export const QUESTION_TYPES = {
     SearchQuestion: Symbol.for("Question.UseCase.SearchQuestion"),
     ShuffleQuestion: Symbol.for("Question.UseCase.ShuffleQuestion"),
     UpdateQuestion: Symbol.for("Question.UseCase.UpdateQuestion"),
+    RemoveQuestion: Symbol.for("Question.UseCase.RemoveQuestion"),
     ArchiveQuestion: Symbol.for("Question.UseCase.ArchiveQuestion"),
   },
 };
