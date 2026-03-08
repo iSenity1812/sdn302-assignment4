@@ -4,11 +4,12 @@ import path from "path";
 export default defineConfig({
   entry: ["src/server.ts"],
   format: ["cjs"],
-  dts: true,
+  dts: false,
   clean: true,
   outDir: "dist",
   tsconfig: "./tsconfig.json",
-  bundle: true, // Add this
+  sourcemap: false,
+  shims: true,
   esbuildOptions(options: any) {
     options.alias = {
       "@": path.resolve(__dirname, "./src"),
