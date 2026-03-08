@@ -8,7 +8,7 @@ export default defineConfig({
   clean: true,
   outDir: "dist",
   tsconfig: "./tsconfig.json",
-  esbuildOptions(options) {
+  esbuildOptions(options: any) {
     options.alias = {
       "@": path.resolve(__dirname, "./src"),
       "@user": path.resolve(__dirname, "./src/modules/user"),

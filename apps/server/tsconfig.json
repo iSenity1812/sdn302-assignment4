@@ -8,12 +8,12 @@
     "rootDir": "src",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["*"],
-      "@user/*": ["modules/user/*"],
-      "@question/*": ["modules/question/*"],
-      "@quiz/*": ["modules/quiz/*"]
+      "@/*": ["src/*"],
+      "@user/*": ["src/modules/user/*"],
+      "@question/*": ["src/modules/question/*"],
+      "@quiz/*": ["src/modules/quiz/*"]
     }
   },
   "exclude": ["node_modules", "dist"],
