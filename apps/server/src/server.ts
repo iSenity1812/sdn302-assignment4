@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { createApp } from "./app";
 import { envConfig } from "./config/env.config";
-import "tsconfig-paths/register";
 
 async function bootstrap() {
   const app = await createApp();
