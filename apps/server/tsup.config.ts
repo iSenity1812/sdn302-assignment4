@@ -8,6 +8,7 @@ export default defineConfig({
   clean: true,
   outDir: "dist",
   tsconfig: "./tsconfig.json",
+  bundle: true, // Add this
   esbuildOptions(options: any) {
     options.alias = {
       "@": path.resolve(__dirname, "./src"),
